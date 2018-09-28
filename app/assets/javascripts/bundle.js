@@ -410,6 +410,10 @@ var _queryString = __webpack_require__(/*! query-string */ "./node_modules/query
 
 var _queryString2 = _interopRequireDefault(_queryString);
 
+var _search_index_item = __webpack_require__(/*! ./search_index_item */ "./frontend/components/search/search_index_item.jsx");
+
+var _search_index_item2 = _interopRequireDefault(_search_index_item);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -467,11 +471,10 @@ var SearchIndex = function (_Component) {
           'ul',
           null,
           albums.map(function (album) {
-            return _react2.default.createElement(
-              'li',
-              { key: album[0].collectionId },
-              album[0].collectionName
-            );
+            return _react2.default.createElement(_search_index_item2.default, {
+              key: album[0].collectionId,
+              album: album
+            });
           })
         )
       );
@@ -525,6 +528,41 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_search_index2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/search/search_index_item.jsx":
+/*!**********************************************************!*\
+  !*** ./frontend/components/search/search_index_item.jsx ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SearchIndexItem = function SearchIndexItem(props) {
+  var album = props.album;
+
+
+  return _react2.default.createElement(
+    'li',
+    null,
+    album[0].collectionName
+  );
+};
+
+exports.default = SearchIndexItem;
 
 /***/ }),
 

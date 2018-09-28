@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import queryString from 'query-string';
+import SearchIndexItem from './search_index_item';
 
 class SearchIndex extends Component {
   constructor(props) {
@@ -25,7 +26,10 @@ class SearchIndex extends Component {
       <div>
         <ul>
           {albums.map(album => (
-            <li key={album[0].collectionId}>{album[0].collectionName}</li>
+            <SearchIndexItem 
+              key={album[0].collectionId}
+              album={album}
+            />
           ))}
         </ul>
       </div>
