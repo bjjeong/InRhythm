@@ -466,7 +466,7 @@ var SearchIndex = function (_Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'albums-container' },
         _react2.default.createElement(
           'ul',
           null,
@@ -556,9 +556,9 @@ var SearchIndexItem = function SearchIndexItem(props) {
 
 
   return _react2.default.createElement(
-    'li',
-    null,
-    _react2.default.createElement('img', { src: album[0].artworkUrl100 }),
+    "div",
+    { className: "search-index-item" },
+    _react2.default.createElement("img", { src: album[0].artworkUrl100 }),
     album[0].collectionName
   );
 };

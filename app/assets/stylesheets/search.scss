@@ -1,0 +1,17 @@
+.albums-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  ul {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+
+.search-index-item {
+  width: 33%;
+}

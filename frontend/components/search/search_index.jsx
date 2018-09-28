@@ -23,7 +23,7 @@ class SearchIndex extends Component {
     let { albums } = this.props;
     
     return(
-      <div>
+      <div className="albums-container">
         <ul>
           {albums.map(album => (
             <SearchIndexItem 
