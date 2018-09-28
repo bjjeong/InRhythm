@@ -769,7 +769,7 @@ Object.defineProperty(exports, "__esModule", {
 var fetchArtistSongs = exports.fetchArtistSongs = function fetchArtistSongs(artist) {
   return $.ajax({
     method: 'GET',
-    url: 'https://itunes.apple.com/search?term=' + artist,
+    url: 'https://itunes.apple.com/search?term=' + artist + '&entity=song',
     dataType: 'jsonp'
   });
 };
