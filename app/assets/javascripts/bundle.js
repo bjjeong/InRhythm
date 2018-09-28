@@ -438,11 +438,42 @@ var SearchIndex = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      if (this.props.albums.length === 0) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'lds-spinner' },
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null),
+          _react2.default.createElement('div', null)
+        );
+      }
+
+      var albums = this.props.albums;
+
 
       return _react2.default.createElement(
         'div',
         null,
-        'Search Index'
+        _react2.default.createElement(
+          'ul',
+          null,
+          albums.map(function (album) {
+            return _react2.default.createElement(
+              'li',
+              { key: album[0].collectionId },
+              album[0].collectionName
+            );
+          })
+        )
       );
     }
   }]);

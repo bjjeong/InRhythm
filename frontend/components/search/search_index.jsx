@@ -13,10 +13,21 @@ class SearchIndex extends Component {
   }
 
   render() {
+    if (this.props.albums.length === 0) {
+      return (
+        <div className="lds-spinner"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+      );
+    }
 
+    let { albums } = this.props;
+    
     return(
       <div>
-        Search Index
+        <ul>
+          {albums.map(album => (
+            <li key={album[0].collectionId}>{album[0].collectionName}</li>
+          ))}
+        </ul>
       </div>
     );
   }
