@@ -86,15 +86,43 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./frontend/actions/album_actions.js":
-/*!*******************************************!*\
-  !*** ./frontend/actions/album_actions.js ***!
-  \*******************************************/
+/***/ "./frontend/actions/song_actions.js":
+/*!******************************************!*\
+  !*** ./frontend/actions/song_actions.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchArtistSongs = exports.recieveArtistSongs = exports.RECEIVE_ARTIST_SONGS = undefined;
+
+var _song_api_util = __webpack_require__(/*! ../util/song_api_util */ "./frontend/util/song_api_util.js");
+
+var SongApiUtil = _interopRequireWildcard(_song_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_ARTIST_SONGS = exports.RECEIVE_ARTIST_SONGS = 'RECEIVE_ARTIST_SONGS';
+
+var recieveArtistSongs = exports.recieveArtistSongs = function recieveArtistSongs(songs) {
+  return {
+    type: RECEIVE_ARTIST_SONGS,
+    songs: Object.values(JSON.parse(songs))[1]
+  };
+};
+
+var fetchArtistSongs = exports.fetchArtistSongs = function fetchArtistSongs(artist) {
+  return function (dispatch) {
+    return SongApiUtil.fetchArtistSongs(artist).then(function (songs) {
+      return dispatch(recieveArtistSongs(songs));
+    });
+  };
+};
 
 /***/ }),
 
@@ -129,13 +157,9 @@ var App = function App(_ref) {
       'div',
       null,
       _react2.default.createElement(
-        _reactRouterDom.Switch,
+        'h1',
         null,
-        _react2.default.createElement(
-          'h1',
-          null,
-          'Hello'
-        )
+        'InRhythm'
       )
     )
   );
@@ -218,6 +242,8 @@ var _store = __webpack_require__(/*! ./store/store */ "./frontend/store/store.js
 
 var _store2 = _interopRequireDefault(_store);
 
+var _song_actions = __webpack_require__(/*! ./actions/song_actions */ "./frontend/actions/song_actions.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -227,45 +253,10 @@ document.addEventListener('DOMContentLoaded', function () {
   window.dispatch = store.dispatch;
   window.getState = store.dispatch;
 
+  window.fetchArtistSongs = store.dispatch((0, _song_actions.fetchArtistSongs)("lauv"));
+
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
-
-/***/ }),
-
-/***/ "./frontend/reducers/albums_reducer.js":
-/*!*********************************************!*\
-  !*** ./frontend/reducers/albums_reducer.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
-
-var _album_actions = __webpack_require__(/*! ../actions/album_actions */ "./frontend/actions/album_actions.js");
-
-var AlbumsReducer = function AlbumsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  var action = arguments[1];
-
-
-  Object.freeze(state);
-
-  switch (action.type) {
-    case _album_actions.RECEIVE_ALBUMS:
-      return action.albums;
-    default:
-      return state;
-  }
-};
-
-exports.default = AlbumsReducer;
 
 /***/ }),
 
@@ -285,14 +276,14 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 
-var _albums_reducer = __webpack_require__(/*! ./albums_reducer */ "./frontend/reducers/albums_reducer.js");
+var _songs_reducer = __webpack_require__(/*! ./songs_reducer */ "./frontend/reducers/songs_reducer.js");
 
-var _albums_reducer2 = _interopRequireDefault(_albums_reducer);
+var _songs_reducer2 = _interopRequireDefault(_songs_reducer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = (0, _redux.combineReducers)({
-	albums: _albums_reducer2.default
+	albums: _songs_reducer2.default
 });
 
 /***/ }),
@@ -324,6 +315,53 @@ var rootReducer = (0, _redux.combineReducers)({
 });
 
 exports.default = rootReducer;
+
+/***/ }),
+
+/***/ "./frontend/reducers/songs_reducer.js":
+/*!********************************************!*\
+  !*** ./frontend/reducers/songs_reducer.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _lodash = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+
+var _song_actions = __webpack_require__(/*! ../actions/song_actions */ "./frontend/actions/song_actions.js");
+
+var AlbumsReducer = function AlbumsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  Object.freeze(state);
+  var newState = (0, _lodash.merge)({}, state);
+
+  switch (action.type) {
+    case _song_actions.RECEIVE_ARTIST_SONGS:
+      var songState = {};
+
+      action.songs.forEach(function (song) {
+        if (songState[song.collectionId]) {
+          songState[song.collectionId].push(song);
+        } else {
+          songState[song.collectionId] = new Array();
+          songState[song.collectionId].push(song);
+        }
+      });
+      return (0, _lodash.merge)(newState, songState);
+    default:
+      return state;
+  }
+};
+
+exports.default = AlbumsReducer;
 
 /***/ }),
 
@@ -362,6 +400,28 @@ var configureStore = function configureStore() {
 };
 
 exports.default = configureStore;
+
+/***/ }),
+
+/***/ "./frontend/util/song_api_util.js":
+/*!****************************************!*\
+  !*** ./frontend/util/song_api_util.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchArtistSongs = exports.fetchArtistSongs = function fetchArtistSongs(artist) {
+  return $.ajax({
+    method: 'GET',
+    url: 'https://itunes.apple.com/search?term=' + artist
+  });
+};
 
 /***/ }),
 

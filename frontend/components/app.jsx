@@ -4,10 +4,11 @@ import { Switch, Route } from 'react-router-dom';
 const App = ({ children }) => (
   <div>
     <div>
-      <Switch>
-        {/* <Route path="/" component={Home} /> */}
-        <h1>Hello</h1>
-      </Switch>
+      <h1>InRhythm</h1>
+
+      {/* <Switch>
+        <Route path="/" component={Home} />
+      </Switch> */}
     </div>
   </div>
 );
