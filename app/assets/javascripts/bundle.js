@@ -558,6 +558,7 @@ var SearchIndexItem = function SearchIndexItem(props) {
   return _react2.default.createElement(
     'li',
     null,
+    _react2.default.createElement('img', { src: album[0].artworkUrl100 }),
     album[0].collectionName
   );
 };

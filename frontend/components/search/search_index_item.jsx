@@ -5,6 +5,7 @@ const SearchIndexItem = props => {
 
   return(
     <li>
+      <img src={album[0].artworkUrl100} />
       {album[0].collectionName}
     </li>
   );
