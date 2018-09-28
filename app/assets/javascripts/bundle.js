@@ -433,7 +433,6 @@ var SearchIndex = function (_Component) {
       var _queryString$parse = _queryString2.default.parse(this.props.queryString),
           artist = _queryString$parse.artist;
 
-      console.log(artist);
       this.props.fetchArtistSongs(artist);
     }
   }, {
@@ -623,7 +622,6 @@ var AlbumsReducer = function AlbumsReducer() {
   var action = arguments[1];
 
   Object.freeze(state);
-  var newState = (0, _lodash.merge)({}, state);
 
   switch (action.type) {
     case _song_actions.RECEIVE_ARTIST_SONGS:
@@ -637,7 +635,7 @@ var AlbumsReducer = function AlbumsReducer() {
           songState[song.collectionId].push(song);
         }
       });
-      return (0, _lodash.merge)(newState, songState);
+      return (0, _lodash.merge)({}, songState);
     default:
       return state;
   }

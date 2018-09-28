@@ -4,7 +4,6 @@ import { RECEIVE_ARTIST_SONGS } from '../actions/song_actions';
 
 const AlbumsReducer = (state = {}, action) => {
   Object.freeze(state);
-  let newState = merge({}, state);
   
   switch (action.type) {
     case RECEIVE_ARTIST_SONGS:
@@ -18,7 +17,7 @@ const AlbumsReducer = (state = {}, action) => {
           songState[song.collectionId].push(song);
         }
       });
-      return merge(newState, songState);
+      return merge({}, songState);
     default:
       return state;
   }

@@ -9,7 +9,6 @@ class SearchIndex extends Component {
 
   componentDidMount() {
     let { artist } = queryString.parse(this.props.queryString);
-    console.log(artist);
     this.props.fetchArtistSongs(artist);
   }
 
