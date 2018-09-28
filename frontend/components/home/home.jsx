@@ -13,6 +13,12 @@ class Home extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+
+    let artist = this.state.artist;
+    this.props.history.push({
+      pathname: '/search',
+      search: `?${artist ? `artist=${artist}` : ''}`,
+    });
   }
 
   update(field) {
@@ -48,4 +54,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default withRouter(Home);

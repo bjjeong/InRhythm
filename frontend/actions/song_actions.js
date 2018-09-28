@@ -5,7 +5,7 @@ export const RECEIVE_ALBUM = 'RECEIVE_ALBUM';
 
 export const recieveArtistSongs = songs => ({
   type: RECEIVE_ARTIST_SONGS,
-  songs: Object.values(JSON.parse(songs))[1]
+  songs: Object.values((songs))[1]
 });
 
 export const fetchArtistSongs = (artist) => dispatch => (
