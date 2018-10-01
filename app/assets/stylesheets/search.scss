@@ -4,14 +4,22 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  ul {
-    width: 80%;
+  h1 {
+    width: 100%;
+    text-align: center;
+  }
+
+  .back-button {
+    width: 100%;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
   }
-}
 
-.search-index-item {
-  width: 33%;
+  ul {
+    width: 50%;
+  }
+
+  .title {
+    font-weight: 600;
+  }
 }

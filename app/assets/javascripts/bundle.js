@@ -428,7 +428,10 @@ var SearchIndex = function (_Component) {
   function SearchIndex(props) {
     _classCallCheck(this, SearchIndex);
 
-    return _possibleConstructorReturn(this, (SearchIndex.__proto__ || Object.getPrototypeOf(SearchIndex)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SearchIndex.__proto__ || Object.getPrototypeOf(SearchIndex)).call(this, props));
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
   }
 
   _createClass(SearchIndex, [{
@@ -438,6 +441,13 @@ var SearchIndex = function (_Component) {
           artist = _queryString$parse.artist;
 
       this.props.fetchArtistSongs(artist);
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(e) {
+      e.preventDefault();
+
+      this.props.history.push("/");
     }
   }, {
     key: 'render',
@@ -463,13 +473,35 @@ var SearchIndex = function (_Component) {
 
       var albums = this.props.albums;
 
+      var _queryString$parse2 = _queryString2.default.parse(this.props.queryString),
+          artist = _queryString$parse2.artist;
+
+      artist = artist.charAt(0).toUpperCase() + artist.slice(1);
 
       return _react2.default.createElement(
         'div',
         { className: 'albums-container' },
         _react2.default.createElement(
-          'ul',
+          'h1',
           null,
+          artist,
+          '\'s Albums'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'back-button' },
+          _react2.default.createElement(
+            'button',
+            {
+              className: 'btn',
+              onClick: this.handleClick
+            },
+            'Back'
+          )
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: 'collection' },
           albums.map(function (album) {
             return _react2.default.createElement(_search_index_item2.default, {
               key: album[0].collectionId,
@@ -554,12 +586,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SearchIndexItem = function SearchIndexItem(props) {
   var album = props.album;
 
+  var albumName = album[0].collectionName;
+  var artistName = album[0].artistName;
+  var releaseDate = new Date(album[0].releaseDate);
 
   return _react2.default.createElement(
-    "div",
-    { className: "search-index-item" },
-    _react2.default.createElement("img", { src: album[0].artworkUrl100 }),
-    album[0].collectionName
+    "li",
+    { className: "search-index-item collection-item avatar" },
+    _react2.default.createElement("img", { className: "circle", src: album[0].artworkUrl100 }),
+    _react2.default.createElement(
+      "span",
+      { className: "title" },
+      albumName
+    ),
+    _react2.default.createElement(
+      "p",
+      null,
+      artistName
+    ),
+    _react2.default.createElement(
+      "p",
+      null,
+      releaseDate.getFullYear()
+    )
   );
 };
 
