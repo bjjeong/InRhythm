@@ -12,7 +12,7 @@ class SearchIndex extends Component {
   componentDidMount() {
     let { artist } = queryString.parse(this.props.queryString);
     this.props.fetchArtistSongs(artist);
-  }
+  } 
 
   handleClick(e) {
     e.preventDefault();

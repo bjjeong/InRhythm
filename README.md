@@ -6,10 +6,11 @@ A simple web application that allows users to search for an artist and view all 
 Didn't necessarily need to build a backend for this but did it anyway just in case I want to build it out further later on.
 
 ## Installation
-1. `bundle install`
-2. `rails s`
-3. `npm install`
-4. Go to `localhost:3000` in the browser
+1. Make sure PostgreSQL is running
+2. `bundle install`
+3. `rails s`
+4. `npm install`
+5. Go to `localhost:3000` in the browser
 
 ## Challenges
 * When searching for an artist, the API returns individual songs by that artist. To make it easier on myself later, I grouped all these songs into albums in my reducer.
