@@ -127,6 +127,195 @@ var fetchArtistSongs = exports.fetchArtistSongs = function fetchArtistSongs(arti
 
 /***/ }),
 
+/***/ "./frontend/components/album/album.jsx":
+/*!*********************************************!*\
+  !*** ./frontend/components/album/album.jsx ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+
+var _queryString = __webpack_require__(/*! query-string */ "./node_modules/query-string/index.js");
+
+var _queryString2 = _interopRequireDefault(_queryString);
+
+var _song = __webpack_require__(/*! ./song */ "./frontend/components/album/song.jsx");
+
+var _song2 = _interopRequireDefault(_song);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Album = function (_Component) {
+  _inherits(Album, _Component);
+
+  function Album(props) {
+    _classCallCheck(this, Album);
+
+    return _possibleConstructorReturn(this, (Album.__proto__ || Object.getPrototypeOf(Album)).call(this, props));
+  }
+
+  _createClass(Album, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _queryString$parse = _queryString2.default.parse(this.props.queryString),
+          artist = _queryString$parse.artist;
+
+      this.props.fetchArtistSongs(artist);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (Object.keys(this.props.albums).length === 0 && this.props.albums.constructor === Object) return _react2.default.createElement(
+        'div',
+        { className: 'lds-spinner' },
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null),
+        _react2.default.createElement('div', null)
+      );
+
+      var _queryString$parse2 = _queryString2.default.parse(this.props.queryString),
+          albumId = _queryString$parse2.albumId;
+
+      var songs = this.props.albums[albumId];
+      songs.sort(function (a, b) {
+        return a.trackNumber - b.trackNumber;
+      });
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'ul',
+          { className: 'collection' },
+          songs.map(function (song) {
+            return _react2.default.createElement(_song2.default, {
+              key: song.trackId,
+              song: song
+            });
+          })
+        )
+      );
+    }
+  }]);
+
+  return Album;
+}(_react.Component);
+
+exports.default = (0, _reactRouter.withRouter)(Album);
+
+/***/ }),
+
+/***/ "./frontend/components/album/album_container.js":
+/*!******************************************************!*\
+  !*** ./frontend/components/album/album_container.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _album = __webpack_require__(/*! ./album */ "./frontend/components/album/album.jsx");
+
+var _album2 = _interopRequireDefault(_album);
+
+var _song_actions = __webpack_require__(/*! ../../actions/song_actions */ "./frontend/actions/song_actions.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, ownProps) {
+  return {
+    queryString: ownProps.location.search,
+    albums: state.entities.albums
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    fetchArtistSongs: function fetchArtistSongs(artist) {
+      return dispatch((0, _song_actions.fetchArtistSongs)(artist));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_album2.default);
+
+/***/ }),
+
+/***/ "./frontend/components/album/song.jsx":
+/*!********************************************!*\
+  !*** ./frontend/components/album/song.jsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Song = function Song(props) {
+  var song = props.song;
+
+
+  return _react2.default.createElement(
+    'li',
+    { className: 'search-index-item collection-item' },
+    song.trackNumber,
+    '. ',
+    song.trackName
+  );
+};
+
+exports.default = (0, _reactRouter.withRouter)(Song);
+
+/***/ }),
+
 /***/ "./frontend/components/app.jsx":
 /*!*************************************!*\
   !*** ./frontend/components/app.jsx ***!
@@ -155,6 +344,10 @@ var _search_index_container = __webpack_require__(/*! ./search/search_index_cont
 
 var _search_index_container2 = _interopRequireDefault(_search_index_container);
 
+var _album_container = __webpack_require__(/*! ./album/album_container */ "./frontend/components/album/album_container.js");
+
+var _album_container2 = _interopRequireDefault(_album_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App(_ref) {
@@ -168,6 +361,7 @@ var App = function App(_ref) {
       _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
+        _react2.default.createElement(_reactRouterDom.Route, { path: '/album', component: _album_container2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/search', component: _search_index_container2.default }),
         _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _home_container2.default })
       )
@@ -581,38 +775,48 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var SearchIndexItem = function SearchIndexItem(props) {
   var album = props.album;
 
   var albumName = album[0].collectionName;
+  var albumId = album[0].collectionId;
   var artistName = album[0].artistName;
   var releaseDate = new Date(album[0].releaseDate);
 
   return _react2.default.createElement(
-    "li",
-    { className: "search-index-item collection-item avatar" },
-    _react2.default.createElement("img", { className: "circle", src: album[0].artworkUrl100 }),
+    'li',
+    {
+      className: 'search-index-item collection-item avatar',
+      onClick: function onClick() {
+        return props.history.push({
+          pathname: '/album',
+          search: '?' + ('artist=' + artistName) + '&' + ('albumId=' + albumId)
+        });
+      } },
+    _react2.default.createElement('img', { className: 'circle', src: album[0].artworkUrl100 }),
     _react2.default.createElement(
-      "span",
-      { className: "title" },
+      'span',
+      { className: 'title' },
       albumName
     ),
     _react2.default.createElement(
-      "p",
+      'p',
       null,
       artistName
     ),
     _react2.default.createElement(
-      "p",
+      'p',
       null,
       releaseDate.getFullYear()
     )
   );
 };
 
-exports.default = SearchIndexItem;
+exports.default = (0, _reactRouter.withRouter)(SearchIndexItem);
 
 /***/ }),
 
