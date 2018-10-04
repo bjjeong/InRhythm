@@ -5,6 +5,10 @@ A simple web application that allows users to search for an artist and view all 
  
 Didn't necessarily need to build a backend for this but did it anyway just in case I want to build it out further later on.
 
+![alt text](https://github.com/bjjeong/InRhythm/raw/master/public/screenshot.png "Screenshot")
+![alt text](https://github.com/bjjeong/InRhythm/raw/master/public/screenshot2.png "Screenshot")
+![alt text](https://github.com/bjjeong/InRhythm/raw/master/public/screenshot3.png "Screenshot")
+
 ## Installation
 1. Make sure PostgreSQL is running
 2. `bundle install`
